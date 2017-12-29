@@ -22,4 +22,49 @@ router.post('/register', function(req, res){
 	})
 })
 
+router.post('/login', function(req, res){
+	
+	turbo.login(req.body) //NOT query.body
+	.then(data => {
+        req.vertexSession.user = {id: data.id}
+
+		res.json({
+			confirmation: 'success',
+            data: data
+		})
+	})
+
+	.catch(err => {
+		res.json({
+			confirmation: 'fail',
+			message: err.message
+		})
+	})
+})
+
+router.get('/currentuser', function(req, res){
+	if (req.vertexSession == null){
+		res.json({
+			confirmation: 'success',
+			message: 'User is not logged in'
+		})		
+
+        return
+	}
+
+	if (req.vertexSession.user == null){
+		res.json({
+			confirmation: 'fail',
+			message: 'User is not logged in'
+		})
+        return
+	}
+
+	res.json({
+		confirmation: 'success',
+        user: req.vertexSession.user.id
+	})	
+
+})
+
 module.exports = router
