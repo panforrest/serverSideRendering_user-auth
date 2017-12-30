@@ -29,7 +29,7 @@ router.get('/', function(req, res){
 
     res.render('index', {
     	react: html,
-    	text: 'This is the dynamic data. Open index.js from the routes directory to see.'
+    	initialState: JSON.stringify(initialState.getState())
     })
 	
 })
