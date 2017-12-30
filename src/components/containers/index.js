@@ -5,10 +5,10 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-import Users from './Users'
+import Admin from './Admin'
 
 export {
 
-	Users
+	Admin
 	
 }
