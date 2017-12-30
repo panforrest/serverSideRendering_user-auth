@@ -12,41 +12,45 @@ const containers = require('../public/dist/es5/components/containers')
 const store = require('../public/dist/es5/stores')
 
 router.get('/', function(req, res){
-    let initial = {
-        user: {
-        	currentUser: {
-        		username: 'TEST!'
-        	}
-        }
+    let initial = {}
+
+    if (req.vertexSession!=null && req.vertexSession.user!=null) {
+		turbo.fetchOne('user', req.vertexSession.user.id)
+		.then(data => {
+            initial['user'] = {
+            	currentUser: data
+            }
+
+
+		    const initialState = store.configure(initial)
+
+			const admin = React.createElement(containers.Admin)
+			const entry = React.createElement(serverIndex, {component:admin, store:initialState})
+			const html = ReactDOMServer.renderToString(entry)
+			console.log('HTML: ' + html)
+
+		    res.render('index', {
+		    	react: html,
+		    	initialState: JSON.stringify(initialState.getState())
+		    })
+
+
+		})
+		.catch(err => {
+			res.json({
+				confirmation: 'fail',
+				message: err.message
+			})
+		})
+		return
     }
 
-    const initialState = store.configure(initial)
 
-	const admin = React.createElement(containers.Admin)
-	const entry = React.createElement(serverIndex, {component:admin, store:initialState})
-	const html = ReactDOMServer.renderToString(entry)
-	console.log('HTML: ' + html)
-
-    res.render('index', {
-    	react: html,
-    	initialState: JSON.stringify(initialState.getState())
-    })
 	
 })
 
 router.get('/auth', function(req, res){
 	res.render('auth', null)
 })
-
-// router.post('/register', function(req, res){
-// 	res.json({
-// 		confirmation: 'success',
-// 		body: req.body
-// 	})
-// })
-
-// router.post('/user/:action', function(req, res){
-    
-// })
 
 module.exports = router
