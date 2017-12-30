@@ -21358,6 +21358,8 @@ var Admin = function (_Component) {
     _createClass(Admin, [{
         key: 'render',
         value: function render() {
+            var currentUser = this.props.user.currentUser;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -21365,6 +21367,11 @@ var Admin = function (_Component) {
                     'h2',
                     null,
                     'This is the Admin Component!'
+                ),
+                currentUser == null ? 'No Current User' : _react2.default.createElement(
+                    'div',
+                    null,
+                    currentUser.username
                 )
             );
         }

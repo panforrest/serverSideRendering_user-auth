@@ -3,9 +3,14 @@ import { connect } from 'react-redux'
 
 class Admin extends Component {
     render(){
+        const currentUser = this.props.user.currentUser
+
     	return(
     		<div className="container">
     		    <h2>This is the Admin Component!</h2>
+                { (currentUser == null) ? 'No Current User' : <div>{currentUser.username}</div>}
+
+
     		</div>
 
         )
