@@ -11,6 +11,13 @@ const serverIndex = require('../public/dist/es5/server-index')
 const containers = require('../public/dist/es5/components/containers')
 const store = require('../public/dist/es5/stores')
 
+const renderComponent = function(initialState, component){
+    const renderdComponent = React.createElement(component)
+    const entry = React.createElement(serverIndex, {component:renderdComponent, store:initialState})
+    const html = ReactDOMServer.renderToString(entry)
+    return html
+}
+
 router.get('/', function(req, res){
     let initial = {}
 
@@ -24,9 +31,11 @@ router.get('/', function(req, res){
 
 		    const initialState = store.configure(initial)
 
-			const admin = React.createElement(containers.Admin)
-			const entry = React.createElement(serverIndex, {component:admin, store:initialState})
-			const html = ReactDOMServer.renderToString(entry)
+			// const admin = React.createElement(containers.Admin)
+			// const entry = React.createElement(serverIndex, {component:admin, store:initialState})
+			// const html = ReactDOMServer.renderToString(entry)
+
+			const html = renderComponent(initialState, containers.Admin)
 			console.log('HTML: ' + html)
 
 		    res.render('index', {
@@ -44,6 +53,14 @@ router.get('/', function(req, res){
 		})
 		return
     }
+
+
+    const initialState = store.configure(initial)
+	const html = renderComponent(initialState, containers.Admin)
+    res.render('index', {
+    	react: html,
+    	initialState: JSON.stringify(initialState.getState())
+    })
 
 
 	
