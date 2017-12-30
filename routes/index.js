@@ -12,7 +12,15 @@ const containers = require('../public/dist/es5/components/containers')
 const store = require('../public/dist/es5/stores')
 
 router.get('/', function(req, res){
-    const initialState = store.configure(null)
+    let initial = {
+        user: {
+        	currentUser: {
+        		username: 'TEST!'
+        	}
+        }
+    }
+
+    const initialState = store.configure(initial)
 
 	const admin = React.createElement(containers.Admin)
 	const entry = React.createElement(serverIndex, {component:admin, store:initialState})
