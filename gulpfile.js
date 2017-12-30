@@ -57,6 +57,7 @@ gulp.task('js', function(){
 
 gulp.task('es6-es5', ['js'], function(){
     return gulp.src([
+                './src/server-index.js',
                 './src/*/**.js',
                 './src/*/*/**.js'
             ]

@@ -9,9 +9,9 @@ var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["defau
 * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-var Users = _interopRequire(require("./Users"));
+var Admin = _interopRequire(require("./Admin"));
 
-exports.Users = Users;
+exports.Admin = Admin;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
